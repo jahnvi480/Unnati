@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{% block title %} {% endblock %}</title>
+	{% load static %}
+	<link href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans&display=swap" rel="stylesheet">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css'%}">
+	<link rel="icon" href="{% static 'images/UBA.jpg' %}"/>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<style type="text/css">
+	#cartbutton{
+    	background-color: white;
+    }
+    #cartbutton:hover{
+    	box-shadow: none;
+    }
+    @media all and (max-width: 768px)
+    {
+    	#cartbutton{
+    		background-color: rgba(0,0,0,0);
+    		margin: 5% 25%;
+    	}
+    } 
+    {% block css %}
+    {% endblock %}
+</style>
+<body>
+	<div class="topheading">
+		<label for="toggle" id="lab">&#9776;</label>
+		<input type="checkbox" id="toggle"/>
+		<div class="menu">
+			<a href="/unnati">Home</a>
+			{% if user.is_authenticated %}
+			{% else %}
+			<a href="/unnati/login" >Cart</a>
+			{% endif %}
+			<form action="cart" method="post">{% csrf_token %}
+				{% for i in cart %}
+				{% if user.username == i.users %}
+				<input type="hidden" value="{{i.users}}" name="user">
+				<button type="submit" id="cartbutton"><a>Cart</a></button>
+				{% endif %}
+				{% endfor %}
+			</form>
+			{% if user.is_authenticated %}
+			<a href="/unnati/logout" id="login">LOGOUT</a>
+			{% else %}
+			<a href="/unnati/login" id="login">LOGIN</a>
+			{% endif %}
+		</div>
+		<img class="hello" src="{% static 'images/dot2.png' %}">
+	</div>
+    {% block body %} {% endblock %}
+	<footer>
+		<div style="line-height: 1.8em;">
+			<p>GET IN TOUCH:<br>
+			<a href="mailto:jahnvithakkar2000@gmail.com" class="mail" title="jahnvithakkar2000@gmail.com"><i class="fa fa-envelope" style="font-size: 15px;"></i> jahnvithakkar2000@gmail.com</a><br>
+			<a href="tel:+919702934903"><i class="fa fa-phone" aria-hidden="true"></i> +919702934903</a><br>
+  			<a href="https://www.facebook.com/TSECUBA" class="fb" target="_blank"><i class="fa fa-facebook" style="font-size: 20px;"></i> TSECUBA</a><br>  
+  			<a href="https://www.instagram.com/uba_tsec_official/?hl=en" class="yt" target="_blank"><i class="fa fa-instagram" style="font-size: 20px;"></i> uba_tsec_official</a> </p>
+		</div>
+		<div>
+         	<p>ADDRESS:<br><i class="fa fa-map-marker" aria-hidden="true"></i> W, P. G. Kher Marg, (32nd Road, Marg, Off Linking Rd, TPS III, Bandra West, Mumbai, Maharashtra 400050<br></p>
+        </div>
+	</footer>
+</body>
+</html>

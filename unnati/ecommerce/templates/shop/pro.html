@@ -1,0 +1,65 @@
+{% extends 'shop/basic.html' %}
+
+{% block title%} {{product.product_name}} | UNNATI {% endblock %}
+
+{% block css %} 
+
+	.cont{
+		margin-top:15vh;
+		display:flex;
+	}
+	.image_of_pro , .content_of_pro{
+		margin:2%;
+	}
+	#proimg{
+		width:300px;
+	}
+	.proname{font-size:36px;}
+	.prodes{font-size:22px;width:60%;line-height:1.5em;}
+	.add_to_cart{
+		width:25%;
+		padding:1%;
+	}
+	#in{width:10%;padding:1%;}
+	@media all and (max-width: 768px)
+    {
+    	.cont{
+    		display:block;
+    	}
+    	#proimg{
+    		width:60%;
+    		margin-left:16%;
+    	}
+    	.image_of_pro , .content_of_pro{margin:4%;}
+    	.proname{font-size:30px;}
+		.prodes{font-size:16px;width:100%;line-height:1.5em;}
+		.add_to_cart{
+			width:50%;
+			padding:1%;
+		}
+		#in{width:30%;padding:2%;}
+    }
+{% endblock %}
+
+{% load static %}
+{% block body %}
+
+	<div class="cont">
+        <div class="image_of_pro">
+			<img src="/media/{{product.image}}" id="proimg">
+		</div>
+		<div class="content_of_pro">
+			<h1 class="proname">{{product.product_name}}</h1>
+			<h4 style="color:#FF8000;"><b>{{product.price}}Rs.</b></h4>
+			<h3 class="prodes">{{product.product_desc}}</h3><br>
+			<form action="cart" method="post">{% csrf_token %}
+			<h3 class="prodes"><b>Quantity</b></h3>
+			<input type="number" name="qty" id="in" value="{{cart.qty}}" min="0"><br><br><br>
+				<input type="hidden" name="user" value="{{user.username}}">
+				<input type="hidden" name="product" value="{{product.id}}">
+				<button class="add_to_cart" type="submit">Add To Cart</button>
+			</form>
+		</div>
+    </div>
+
+{% endblock %}

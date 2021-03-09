@@ -1,0 +1,135 @@
+{% extends 'shop/basic.html' %}
+
+{% block title%} Home | Unnati {% endblock %}
+{% load static %}
+{% block css %}
+	#ho{
+		background: url("{% static 'images/try1.jpg' %}") no-repeat;
+		background-size: cover;
+	}
+	#onimg{
+		padding: 11% 12% 11% 12%;
+		width: 60%;
+		font-size: 34px; 
+		text-align: center ;
+		line-height: 1.5;
+	}
+	.pro{
+    border:0.5px solid;
+    margin:2vh 1%;
+    width: 20%; 
+    padding: 1%;
+    background-color: white;
+  }
+  .pro p {
+    margin: 0px;
+    padding: 5px;
+    border-top: 0.5px solid;
+    text-align: center;
+  }
+  .pro:hover{
+    box-shadow: 1px 1px 7px #FF8000,0px 0px 3px #FF8000;
+    border: none;
+  }
+  .container{
+    display: flex;
+    position: relative;
+    margin:auto;
+    padding:0px;
+    min-width:90%;  
+    background-color: white;
+  }
+  #lemon{
+  	margin-left: 2%;
+    width:75%;
+  }
+  #allu{
+    width:99%;   
+  }
+  #aachar{
+  	margin-left: -5%;
+    width:110%;
+  }
+  #papad{
+    width:100%;    
+  }
+  #candy{
+    width:100%;     
+  }
+  .preview{
+  	margin-left: 30%;
+  }
+	@media all and (max-width: 768px)
+    {
+		#ho{
+			background: url("{% static 'images/image.jpg' %}") no-repeat;
+			background-size: cover;
+		}
+		#onimg{ 
+			padding:30vh 3% 23vh 3%; 
+			width: 100%; 
+			font-size: 25px; 
+			color: white;
+			text-shadow: 1px 2px 3px rgba(0,0,0,0.4);
+			background-color: rgba(0,0,0,0.3);
+		}
+		.container{ 
+			display: block; 
+		} 
+		.preview{
+		  margin-left: 34%;
+		}
+		.pro{ margin: 9% 7%; width:85%; } 
+		#lemon{ margin-left: 20%; width:58%;} 
+		#allu{ margin-left: 13%; width:78%;} 
+		#aachar{ margin-left: 10%;width:80%;} 
+		#papad{ margin-left: 15%; width:75%;} 
+		#candy{margin-left: 5%; width:90%;} 
+    }
+{% endblock %}
+{% block body %}
+	<br><br>
+	<div id="ho" style="position: relative;">
+		<h3 id="onimg">We supply homemade products which are freshly prepared from the raw material which are directly taken from the farms.
+			<br>
+			<button onclick="document.getElementById('container1').scrollIntoView();">SHOP NOW</button>
+		</h3>
+	</div>
+	<div class="container" id="container1" style="width: 100%;">
+		<div class="pro">
+		<div class="anim">
+		  <img src="{% static 'images/lemon.jpg' %}" id="lemon">
+		  </div>
+		  <p><b>Lemonade, 250ml</b><br>PRICE: 25/-</p>
+		  <button class="preview" onclick="location.href='/unnati/product_{{product.0.id}}'">Preview</button>
+		</div>
+		<div class="pro">
+		  <div class="anim">
+		    <img src="{% static 'images/allu.png' %}" id="allu">
+		  </div>
+		  <p><b>Potato Chips, 200gm</b><br>PRICE: 50/-</p>
+		  <button class="preview" onclick="location.href='/unnati/product_{{product.1.id}}'">Preview</button>
+		</div>
+		<div class="pro">
+		  <div class="anim">
+		    <img src="{% static 'images/aachar.jpg' %}" id="aachar">
+		  </div>
+		  <p><b>Aachar, 500gm</b><br>PRICE: 150/-</p>
+		  <button class="preview" onclick="location.href='/unnati/product_{{product.2.id}}'">Preview</button>
+		</div>
+		<div class="pro">
+		  <div class="anim">
+		    <img src="{% static 'images/papad.jpg' %}" id="papad">
+		  </div>
+		  <p><b>Papad </b><br>PRICE: 60/-</p>
+		  <button class="preview" onclick="location.href='/unnati/product_{{product.3.id}}'">Preview</button>
+		</div>
+		<div class="pro">
+		  <div class="anim">
+		    <img src="{% static 'images/candy.jpg' %}" id="candy">
+		  </div>
+		  <p><b>Lemon Candy</b><br>PRICE: 10/-</p>
+		  <button class="preview" onclick="location.href='/unnati/product_{{product.4.id}}'">Preview</button>
+		</div>
+	</div>
+{% endblock %}

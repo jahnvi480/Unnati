@@ -1,0 +1,160 @@
+{% extends 'shop/basic.html' %}
+
+{% block title%} Checkout | Unnati {% endblock %}
+
+{% block css %} 
+	body{
+		background-color:  #f2f2f2;
+	}
+	.bill{
+		display: flex;
+		margin-top: 18vh;
+	}
+	.addform{
+		background-color: white;
+		padding: 2%;
+		line-height: 1.5em;
+		margin: 5%;
+		margin-top: 0px;
+		width: 50%;
+		box-shadow: 2px 3px 10px rgba(0,0,0,0.2);
+	}
+	.summary{
+		background-color: white;
+		width: 35%;
+		padding:0.5%;
+		position: fixed;
+		margin-left:60%;
+		box-shadow:  2px 3px 10px rgba(0,0,0,0.2);
+	}
+	input{
+		width: 100%;
+		margin-top:5px;
+		margin-bottom: 20px;
+		padding: 12px;
+		border: 1px solid #ccc;
+		border-radius: 3px;
+	}
+	#bill_title{
+		text-align: center;
+		color:  #FF8000;
+		font-weight: bold;
+		line-height: 1em;
+	}
+	.state,.pincode{
+		width: 47.8%;
+	}
+	.pincode{
+		margin-left: 21px;
+	}
+	.place_order{
+		margin:30px 0% 10px 0%;
+		width: 100%;
+		height: 50px;
+		padding: 2px;
+		font-size: 20px;
+	}
+	table {
+		border-collapse: collapse;
+		border:1px solid;
+	}
+	th, td {
+		text-align: center;
+		border:1px solid #d4d2cf;
+	    padding: 8px;
+	}
+	@media all and (max-width: 768px)
+    {
+    	body{
+    		max-width: 100%;
+    	}
+    	.bill{
+    		display: block;
+    	}
+    	#bill_title{
+    		margin-bottom: 20px;
+    	}
+    	.summary{
+    		position: relative;
+    		margin-left: 2.5%;
+    		width: 95%;
+    		margin-bottom: 20px;
+    	}
+    	.addform{
+    		margin-left: 2.5%;
+    		width: 95%;
+    		padding: 3%;
+    	}
+    	.state,.pincode{
+    		width: 100%;
+    		margin-top: auto;
+    	}
+    	#city,#adr{
+    		margin-top: auto;
+    		margin-bottom: 0px;
+    	}
+    	.pincode{
+    		margin-left: 0px
+    	}
+    	.hide{
+    		display: none;
+    	}
+    	td{
+    		font-size: 13px;
+    	}
+    }
+{% endblock %}
+{% load static %}
+{% block body %}
+	<div class="bill">
+		<div class="summary">
+			<h4 style="text-align: center;">ORDER SUMMERY</h4>
+			<table id="cart_element" style="width:100%">
+			{% for item in cartitem %}
+			<tr>
+                <td style="text-align:center"><img src="/media/{{item.image}}" width="80px"></td>
+				{% if item.id == 3 %}
+				<td>{{item}}<br>Price: {{item.price}}/- Qty: {{qty.Aachar}}</td>
+				{% elif item.id == 4 %}
+				<td>{{item}}<br>Price: {{item.price}}/- Qty: {{qty.Papad}}</td>
+				{% elif item.id == 1 %}
+				<td>{{item}}<br>Price: {{item.price}}/- Qty: {{qty.Lemonade}}</td>
+				{% elif item.id == 2 %}
+				<td>{{item}}<br>Price: {{item.price}}/- Qty: {{qty.P_C}}</td>
+				{% elif item.id == 5 %}
+				<td>{{item}}<br>Price: {{item.price}}/- Qty: {{qty.K_M_G}}</td>
+				{% endif %}
+  			</tr>
+			{% endfor %}
+			<tr>
+				<td><pre>          </pre></td>
+				<td><h5><b>Total:</b> {{carts.total}}Rs.</h5></td>
+			</tr>
+		</table>
+	    </div>
+	    <div class="addform">
+	        <h3 id="bill_title">Billing Address</h3>
+	        <form action="/unnati/" method="post">{% csrf_token %}
+        		{% if user.is_authenticated %}
+	        	<label><i class="fa fa-user"></i> UserName</label><br>
+	            <input type="text" id="fname" name="user" placeholder="UserName" value="{{user.username}}" autocomplete="off"><br>
+	            <label for="email"><i class="fa fa-envelope"></i> Email</label><br>
+	            <input type="email" id="email" name="email" placeholder="Email" value="{{user.email}}" autocomplete="off">{% endif %}<br>
+	            <label for="adr"><i class="fa fa-phone" aria-hidden="true"></i> Contact No</label><br>
+	            <input type="tel" id="phone" name="phone" placeholder="Contact no" autocomplete="off"><br>
+	            <label for="adr"><i class="fa fa-address-card-o"></i> Address</label><br>
+	            <input type="text" id="adr" name="address" placeholder="Address" autocomplete="off"><br>
+	            <label for="city" class="hide"><i class="fa fa-institution"></i> City</label><br>
+	            <input type="text" id="city" name="city" placeholder="City" autocomplete="off"><br>
+	            <label for="state" class="state hide" class="hide" >State</label>
+	            <label for="zip" class="pincode hide" id="pin">Pin-Code</label><br>
+	            <input type="text" id="state" name="state" placeholder="State" class="state" autocomplete="off">
+	            <input type="text" id="zip" name="zip" placeholder="Pin-Code" class="pincode" autocomplete="off"><br>
+	            {% if user.is_authenticated %}
+				<input type="hidden" name="user" value="{{user.username}}">
+				{% endif %}
+	            <button type="submit" class="place_order">Place Order</button>
+	        </form>
+	    </div>
+	</div>
+{% endblock %}

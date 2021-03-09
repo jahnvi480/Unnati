@@ -1,0 +1,120 @@
+{% extends 'shop/basic.html' %}
+
+{% block title%} Login | Unnati {% endblock %}
+
+{% block css %} 
+	#bgimg{
+		margin-top:9vh;
+		width: 100vw;
+		height: 100vh;
+		position: absolute;
+		z-index: -1;
+	}
+	.login-button{
+		margin-bottom: 20px;
+		width: 40%;
+		padding: 2px;
+	}
+	button{
+		color:white;
+		background-color: #FF8000;	
+		border-radius: 10px;
+		border:none;
+		font-size: 20px;
+	}
+	h1{
+		font-weight: bold;
+		color: white;
+		margin-bottom: 40px;
+	}
+	h1, #gotologin{
+		color: white;
+	}
+	#gotologin{
+		cursor: pointer;
+		margin-left:32%;
+	}
+	.in{
+		width: 100%;
+		margin-bottom: 40px;
+		height: 40px;
+	}
+	.in1,.in12{
+		width: 47.8%;
+		margin-bottom: 40px;
+		height: 40px;
+	}
+	.in12{
+		margin-left: 21px;
+	}
+	.activity1{
+		text-align: center;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        width: 50%;
+        margin:18vh 25% 8vh 25%;
+        padding: 20px;
+        background-color: rgba(0,0,0, 0.7);
+        position: relative;
+        z-index: 1;
+        }
+    .container{
+    	display: flex;
+    	text-align:center;
+    }
+    @media all and (max-width: 768px)
+    {
+    	.activity1{
+    		margin:15vh 4.5% 5vh 4.5%;
+    		width: 90%;
+    		padding: 25px;
+    	}
+    	h1{
+    		margin-bottom: 30px;
+    		font-size: 22px;
+    	}
+    	.in,.in1,.in12{
+    		width: 100%;
+    		height: 30px;
+    		margin-bottom: 30px;
+    	}
+    	.login-button{
+    		padding: 1px;
+    		width: 50%;
+    	}
+    	.container{
+    		display:block; 
+    	}
+    	#gotologin{
+    		margin-left: 15px;
+    	}
+    	.in12{
+    		margin-left: 0px;
+    	}
+    }
+{% endblock %}
+{% load static %}
+{% block body %} 
+<body style="margin: 0px; ">
+	<img src="{% static 'images/image.jpg' %}" id="bgimg">
+	<form action="register" method="post" id="signup"> {% csrf_token %}
+	<div class="activity1">
+		<div>
+			<h1>WELCOME TO UNNATI</h1>
+			<input class="in1" type="text" name="first_name" placeholder="First Name" autocomplete="off">
+			<input class="in12" type="text" name="last_name" placeholder="Last Name" autocomplete="off">
+			<input class="in" type="email" name="email" placeholder="Email" autocomplete="off"><br>
+			<input class="in" name="username" placeholder="username" autocomplete="off"><br>
+			<input class="in" type="password" name="password1" onkeyup="check()" id="crepass" placeholder="Create Password" autocomplete="off">
+			<input class="in" type="password" name="password2" onkeyup="check()" id="repass" placeholder="Re-type Password" autocomplete="off"><br>
+			<button type="submit" class="login-button">SIGN UP</button>
+			<div class="container">
+				<p onclick="location.href='/unnati/login'" id="gotologin">Already have an account? Login</p>
+			</div>
+		</div>
+	</div>
+		{% for message in messages %}
+		<div>{{message}}</div>
+		{% endfor %}
+	</form>
+{% endblock %}

@@ -1,0 +1,186 @@
+{% extends 'shop/basic.html' %}
+
+{% block title%} YourCart | Unnati {% endblock %}
+
+{% block css %}
+
+	.cartnew{
+		margin-top: 18vh;
+		text-align: center;
+	}
+	#cart_element{
+		margin:2%;
+		width: 95%;
+	}
+	#cart_total{
+		width: 25%;
+		margin:1%;
+		margin-bottom: 2%;
+		margin-left: 65%; 
+	}
+	h1,h3{
+		color:  #FF8000;
+		font-weight: bold;
+		text-shadow: 1px 2px 3px rgba(0,0,0,0.4);
+		line-height: 1em;
+	}
+	h3{
+		margin-top: 6%;
+		text-shadow: none;
+		margin-left: 57%;
+	}
+	table {
+		border-collapse: collapse;
+		border:1px solid;
+	}
+	th, td {
+		text-align: center;
+		border:1px solid #d4d2cf;
+	    padding: 8px;
+	}
+	th {
+	  background-color:  #f2f2f2;
+	  color:  #FF8000;
+	}
+	.checkout-button{
+		margin-bottom: 20px;
+		width: 20%;
+		padding: 2px;
+	}
+	#Lemonade{width:150px;}
+	#kmg{width:200px;}
+	#aachar{width:200px;}
+	#papad{width:200px;}
+	@media all and (max-width: 768px)
+    {
+    	.cartnew{
+    		margin-top: 15vh;
+    	}
+    	#cart_total{
+    		margin-bottom: 5vh;
+    		margin-left: 55%;
+    		width: 40%;
+    	}
+    	h1{
+    		font-size: 28px;
+    		text-shadow: 1px 2px 1px rgba(0,0,0,0.2);
+			line-height: 2.5em;
+    	}
+    	h3{
+    		margin-top: 8%;
+    		margin-left: 50%;
+    		font-size: 20px;
+    	}
+    	th{
+    		font-size: 13px;
+    	}
+    	td{
+    		font-size: 13px;
+    	}
+    	.checkout-button{
+    		font-size: 16px;
+    		padding: 1px;
+    		width: 30%;
+    	}
+    	#Lemonade{width:80px;}
+    	#pc{width:100px}
+		#kmg{width:100px;}
+		#aachar{width:100px;}
+		#papad{width:100px;}
+	}
+
+{% endblock %}
+
+{% load static %}
+{% block body %}
+
+<div class="cartnew">
+		<h1>SHOPPING CART</h1>
+		<table id="cart_element">
+			<tr>
+  				<th>PRODUCT</th>
+  				<th>PRICE</th>
+				<th>QUANTITY</th>
+				<th>SUBTOTAL</th>
+  			</tr>
+  			{% for item in cartitem %}
+  			<tr>
+  				{% if item.id == 1 %}
+					<td><img src="/media/{{item.image}}" id="Lemonade"><a href="/unnati/product_1">{{item}}</a></td>
+					{% elif item.id == 2 %}
+					<td><img src="/media/{{item.image}}" id="pc"><a href="/unnati/product_2">{{item}}</a></td>
+					{% elif item.id == 3 %}
+					<td><img src="/media/{{item.image}}" id="aachar"><a href="/unnati/product_3">{{item}}</a></td>
+					{% elif item.id == 4 %}
+					<td><img src="/media/{{item.image}}" id="papad"><a href="/unnati/product_4">{{item}}</a></td>
+					{% elif item.id == 5 %}
+					<td><img src="/media/{{item.image}}" id="kmg"><a href="/unnati/product_5">{{item}}</a></td>
+				{% endif %}
+				{% if item.id == 1 %}
+	  			  <td style="color: #FF8000;" class="price">{{item.price}}</td>
+					{% elif item.id == 2 %}
+	  			  <td style="color: #FF8000;" class="price">{{item.price}}</td>
+					{% elif item.id == 3 %}
+	  			  <td style="color: #FF8000;" class="price">{{item.price}}</td>
+					{% elif item.id == 4 %}
+	  			  <td style="color: #FF8000;" class="price">{{item.price}}</td>
+				  	{% elif item.id == 5  %}
+				  <td style="color: #FF8000;" class="price">{{item.price}}</td>
+				{% endif %}
+				{% if item.id == 1 %}
+	  			  <td class="QUANT">{{qty.Lemonade}}</td>
+					{% elif item.id == 2 %}
+	  			  <td class="QUANT">{{qty.P_C}}</td>
+					{% elif item.id == 3 %}
+	  			  <td class="QUANT">{{qty.Aachar}}</td>
+					{% elif item.id == 4 %}
+	  			  <td class="QUANT">{{qty.Papad}}</td>
+				  	{% elif item.id == 5  %}
+				  <td class="QUANT">{{qty.K_M_G}}</td>
+				{% endif %}
+  				{% if item.id == 1 %}
+	  			  <td class="subtotal"></td>
+					{% elif item.id == 2 %}
+	  			  <td class="subtotal"></td>
+					{% elif item.id == 3 %}
+	  			  <td class="subtotal"></td>
+					{% elif item.id == 4 %}
+	  			  <td class="subtotal"></td>
+				  	{% elif item.id == 5  %}
+				  <td class="subtotal"></td>
+				{% endif %}
+  			</tr>
+  			{% endfor %}
+		</table>
+		<h3>CART TOTAL</h3>
+		<table id="cart_total">
+			<tr>
+				<th width="40%">TOTAL</th>
+				<td>{{carts.total}}Rs.</td>
+			</tr>
+		</table>
+		<form action="checkout" method="post">{% csrf_token %}
+			{% if user.is_authenticated %}
+			<input type="hidden" name="user" value="{{user.username}}">
+			{% endif %}
+			<button type="submit" class="checkout-button" >Checkout</button>
+		</form>
+	</div>
+	<script type="text/javascript">
+		var x = document.getElementsByClassName('subtotal');
+		var y = document.getElementsByClassName('QUANT');
+		var z =  document.getElementsByClassName('price');
+		x[0].innerHTML = y[0].innerHTML * z[0].innerHTML + "/-";
+		z[0].innerHTML +="/-";
+		x[1].innerHTML = y[1].innerHTML * z[1].innerHTML + "/-";
+		z[1].innerHTML +="/-";
+		x[2].innerHTML = y[2].innerHTML * z[2].innerHTML + "/-";
+		z[2].innerHTML +="/-";
+		x[3].innerHTML = y[3].innerHTML * z[3].innerHTML + "/-";
+		z[3].innerHTML +="/-";
+		x[4].innerHTML = y[4].innerHTML * z[4].innerHTML + "/-";
+		z[4].innerHTML +="/-";
+
+	</script>
+
+{% endblock %}

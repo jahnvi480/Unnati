@@ -1,0 +1,91 @@
+{% extends 'shop/basic.html' %}
+
+{% block title%} Login | Unnati {% endblock %}
+
+{% block css %} 
+	#bgimg{
+		width: 100vw;
+		height: 100vh;
+		position: absolute;
+		z-index: -1;
+	}
+	.activity{
+		box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+      	width: 50%;
+        margin:28vh 25% 15vh 25%;
+        padding: 30px;
+        background-color: rgba(0,0,0, 0.7);
+        position: relative;
+        z-index: 1;
+        text-align: center;
+	}
+	.login-button{
+		margin-bottom: 20px;
+		width: 40%;
+		padding: 2px;
+	}
+	button{
+		color:white;
+		background-color: #FF8000;	
+		border-radius: 10px;
+		border:none;
+		font-size: 20px;
+	}
+	.in{
+		width: 90%;
+		margin-bottom: 40px;
+		height: 50px;
+	}
+	h1{
+		font-weight: bold;
+		color: white;
+		margin-bottom: 40px;
+	}
+	h1, p{
+		color: white;
+	}
+	p{
+		cursor: pointer;
+	}
+	@media all and (max-width: 768px)
+    {
+    	.activity{
+    		margin:22vh 4.5% 10vh;
+    		width: 90%;
+    		padding: 25px 10px;
+    	}
+    	h1{
+    		margin-bottom: 30px;
+    		font-size: 22px;
+    	}
+    	.in{
+    		width: 100%;
+    		height: 35px;
+    		margin-bottom: 30px;
+    	}
+    	.login-button{
+    		padding: 1px;
+    		width: 50%;
+    	}
+    }
+{% endblock %}
+{% load static %}
+{% block body %}
+<body style="margin: 0px; ">
+	<img src="{% static 'images/image.jpg' %}" id="bgimg">
+	<form action="login" method="post">{% csrf_token%}
+		<div class="activity">
+			<div class="container">
+				<h1>WELCOME TO UNNATI</h1>
+				<input class="in" type="text" name="username" placeholder="Username" autocomplete="off"><br>
+				<input class="in" type="password" name="password" placeholder="Password" autocomplete="off"><br>
+				<button type="submit" class="login-button">LOGIN</button>
+				<p onclick="location.href='/unnati/register'">Create account</p>
+			</div>
+		</div>
+	</form>
+		{% for message in messages %}
+		<div>{{message}}</div>
+		{% endfor %}
+{% endblock %}
